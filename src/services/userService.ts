@@ -59,7 +59,7 @@ export const signIn = async (email: string, password: string): Promise<UserAuthe
 };
 
 export const getUserData = async (userId: string) => {
-	const user = await User.findOne({ _id: userId });
+	const user = await User.findOne({ _id: userId }).select('-password');
 	if (!user) {
 		return {
 			status: HttpStatus.BAD_REQUEST,
@@ -67,8 +67,6 @@ export const getUserData = async (userId: string) => {
 			success: false,
 		};
 	}
-
-	user.password = ''; // do not return password with the response
 
 	return {
 		user,

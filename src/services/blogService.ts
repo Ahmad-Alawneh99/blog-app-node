@@ -8,7 +8,7 @@ export const createBlog = async (blogData: Pick<BlogDTO, 'title' | 'content'>, u
 	const preparedBlogData: BlogDTO = {
 		title: blogData.title,
 		content: blogData.content,
-		ownerId: userId,
+		owner: userId,
 		createdAt: now,
 		updatedAt: now,
 	};
@@ -25,7 +25,11 @@ export const createBlog = async (blogData: Pick<BlogDTO, 'title' | 'content'>, u
 	};
 };
 
-export const updateBlog = async (blogData: Pick<BlogDTO, 'title' | 'content'>, blogId: string, userId: string) => {
+export const updateBlog = async (
+	blogData: Pick<BlogDTO, 'title' | 'content'>,
+	blogId: string,
+	userId: string
+) => {
 	const existingBlog = await Blog.findById(blogId);
 
 	if (!existingBlog) {
@@ -36,7 +40,7 @@ export const updateBlog = async (blogData: Pick<BlogDTO, 'title' | 'content'>, b
 		};
 	}
 
-	if (existingBlog.ownerId !== userId) {
+	if (existingBlog.owner !== userId) {
 		return {
 			success: false,
 			status: HttpStatus.FORBIDDEN,
@@ -70,7 +74,7 @@ export const deleteBlog = async (blogId: string, userId: string) => {
 		};
 	}
 
-	if (blog.ownerId !== userId) {
+	if (blog.owner !== userId) {
 		return {
 			success: false,
 			status: HttpStatus.FORBIDDEN,
@@ -88,9 +92,11 @@ export const deleteBlog = async (blogId: string, userId: string) => {
 };
 
 export const getAllBlogs = async (userId?: string) => {
-	const query = userId ? { ownerId: userId } : {};
+	const query = userId ? { owner: userId } : {};
 
-	const blogs = await Blog.find(query);
+	const blogs = await Blog.find(query)
+		.sort([['updatedAt', -1]])
+		.populate('owner', '-password');
 
 	return {
 		success: true,
@@ -100,12 +106,12 @@ export const getAllBlogs = async (userId?: string) => {
 };
 
 export const getBlogById = async (blogId: string, userId?: string) => {
-	const query: { _id: string, ownerId?: string } = { _id: blogId };
+	const query: { _id: string, owner?: string } = { _id: blogId };
 	if (userId) {
-		query.ownerId = userId;
+		query.owner = userId;
 	}
 
-	const blog = await Blog.findOne(query);
+	const blog = await Blog.findOne(query).populate('owner', '-password');
 
 	if (!blog) {
 		return {

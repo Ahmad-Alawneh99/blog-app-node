@@ -22,7 +22,7 @@ const blogSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 	},
-	ownerId: {
+	owner: {
 		type: String,
 		ref: 'User',
 	},

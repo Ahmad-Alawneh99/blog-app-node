@@ -8,7 +8,7 @@ export interface BlogDTO {
 	_id?: string;
 	title: string;
 	content: string;
-	ownerId: string;
+	owner: string;
 	createdAt: number,
 	updatedAt: number,
 }
