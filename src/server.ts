@@ -11,19 +11,22 @@ const port = 3030;
 connectToMongoDB().catch((error) => console.log('failed to connect to mongodb', error));
 
 app.use(express.json());
-// app.use(cors({
-// 	origin: (origin, callback) => {
-// 		const localDevLink = /^http:\/\/localhost:\d{1,5}$/;
-// 		const backendURL = 'URL HERE';
+app.use(cors({
+	origin: (origin, callback) => {
+		if (process.env.ENV_TYPE === 'LOCAL') {
+			return callback(null, true);
+		}
 
-// 		if (localDevLink.test(origin) || origin === backendURL) {
-// 			return callback(null, true);
-// 		} else {
-// 			return callback(new Error('Not allowed by CORS'));
-// 		}
-// 	},
-// 	credentials: true,
-// }));
+		const backendURL = 'URL HERE';
+
+		if (origin === backendURL) {
+			return callback(null, true);
+		} else {
+			return callback(new Error('Not allowed by CORS'));
+		}
+	},
+	credentials: true,
+}));
 
 app.get('/', (req: Request, res: Response) => {
 	return res.send('Blog app backend');
