@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "npm run build && node dist/src/server.js",
-    "start": "node dist/server.js",
+    "start": "npm run build && node dist/src/server.js",
     "test": "nyc ts-mocha",
     "eslint": "eslint src/**",
     "eslint:fix": "eslint src/** --fix",
