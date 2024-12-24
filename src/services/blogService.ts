@@ -116,6 +116,7 @@ export const getBlogById = async (blogId: string, userId?: string) => {
 		};
 	}
 
+	// workaround because typescript isn't recognizing that 'owner' is an object here
 	if (userId && (blog.owner as unknown as { _id: string })._id !== userId) {
 		return {
 			success: false,

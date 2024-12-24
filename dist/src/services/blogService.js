@@ -105,6 +105,7 @@ const getBlogById = (blogId, userId) => __awaiter(void 0, void 0, void 0, functi
             message: 'Blog not found',
         };
     }
+    // workaround because typescript isn't recognizing that 'owner' is an object here
     if (userId && blog.owner._id !== userId) {
         return {
             success: false,
