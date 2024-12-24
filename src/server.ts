@@ -17,7 +17,9 @@ app.use(cors({
 			return callback(null, true);
 		}
 
-		const backendURL = 'URL HERE';
+		console.log('origin', origin);
+
+		const backendURL = 'https://blog-app-next-theta.vercel.app';
 
 		if (origin === backendURL) {
 			return callback(null, true);
