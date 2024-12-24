@@ -98,7 +98,6 @@ const getAllBlogs = (userId) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllBlogs = getAllBlogs;
 const getBlogById = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
     const blog = yield blog_1.default.findOne({ _id: blogId }).populate('owner', '-password-email');
-    console.log('blog', blog);
     if (!blog) {
         return {
             success: false,
