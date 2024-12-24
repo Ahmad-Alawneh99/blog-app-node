@@ -28,7 +28,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const dbConnect_1 = require("./shared/dbConnect");
 const userRoutes_1 = __importDefault(require("./routers/userRoutes"));
 const blogRoutes_1 = __importDefault(require("./routers/blogRoutes"));
@@ -37,22 +36,6 @@ const app = (0, express_1.default)();
 const port = 3030;
 (0, dbConnect_1.connectToMongoDB)().catch((error) => console.log('failed to connect to mongodb', error));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: (origin, callback) => {
-        if (process.env.ENV_TYPE === 'LOCAL') {
-            return callback(null, true);
-        }
-        console.log('origin', origin);
-        const backendURL = 'https://blog-app-next-theta.vercel.app';
-        if (origin === backendURL) {
-            return callback(null, true);
-        }
-        else {
-            return callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-}));
 app.get('/', (req, res) => {
     return res.send('Blog app backend');
 });
