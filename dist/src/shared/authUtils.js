@@ -36,7 +36,7 @@ const isUserLoggedIn = (req, res, next) => {
         return next();
     }
     catch (error) {
-        return res.status(httpStatusCodes_1.HttpStatus.UNAUTHORIZED).send({ success: false, code: httpStatusCodes_1.HttpStatus.UNAUTHORIZED, message: 'Authentication required' });
+        return res.status(httpStatusCodes_1.HttpStatus.UNAUTHORIZED).send({ success: false, status: httpStatusCodes_1.HttpStatus.UNAUTHORIZED, message: 'Authentication required' });
     }
 };
 exports.isUserLoggedIn = isUserLoggedIn;

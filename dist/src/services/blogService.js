@@ -88,7 +88,7 @@ const getAllBlogs = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const query = userId ? { owner: userId } : {};
     const blogs = yield blog_1.default.find(query)
         .sort([['updatedAt', -1]])
-        .populate('owner', '-password');
+        .populate('owner', '-password-email');
     return {
         success: true,
         status: httpStatusCodes_1.HttpStatus.OK,
@@ -97,16 +97,20 @@ const getAllBlogs = (userId) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getAllBlogs = getAllBlogs;
 const getBlogById = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = { _id: blogId };
-    if (userId) {
-        query.owner = userId;
-    }
-    const blog = yield blog_1.default.findOne(query).populate('owner', '-password');
+    const blog = yield blog_1.default.findOne({ _id: blogId }).populate('owner', '-password-email');
+    console.log('blog', blog);
     if (!blog) {
         return {
             success: false,
             status: httpStatusCodes_1.HttpStatus.BAD_REQUEST,
             message: 'Blog not found',
+        };
+    }
+    if (userId && blog.owner._id !== userId) {
+        return {
+            success: false,
+            status: httpStatusCodes_1.HttpStatus.FORBIDDEN,
+            message: 'You do not have access to this blog',
         };
     }
     return {

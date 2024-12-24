@@ -15,6 +15,6 @@ export const isUserLoggedIn = (req: ExtendedRequest, res: Response, next: NextFu
 
 		return next();
 	} catch (error) {
-		return res.status(HttpStatus.UNAUTHORIZED).send({ success: false, code: HttpStatus.UNAUTHORIZED, message: 'Authentication required' });
+		return res.status(HttpStatus.UNAUTHORIZED).send({ success: false, status: HttpStatus.UNAUTHORIZED, message: 'Authentication required' });
 	}
 };

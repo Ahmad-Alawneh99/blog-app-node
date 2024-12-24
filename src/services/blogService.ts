@@ -96,7 +96,7 @@ export const getAllBlogs = async (userId?: string) => {
 
 	const blogs = await Blog.find(query)
 		.sort([['updatedAt', -1]])
-		.populate('owner', '-password');
+		.populate('owner', '-password-email');
 
 	return {
 		success: true,
@@ -106,18 +106,21 @@ export const getAllBlogs = async (userId?: string) => {
 };
 
 export const getBlogById = async (blogId: string, userId?: string) => {
-	const query: { _id: string, owner?: string } = { _id: blogId };
-	if (userId) {
-		query.owner = userId;
-	}
-
-	const blog = await Blog.findOne(query).populate('owner', '-password');
+	const blog = await Blog.findOne({ _id: blogId }).populate('owner', '-password-email');
 
 	if (!blog) {
 		return {
 			success: false,
 			status: HttpStatus.BAD_REQUEST,
 			message: 'Blog not found',
+		};
+	}
+
+	if (userId && (blog.owner as unknown as { _id: string })._id !== userId) {
+		return {
+			success: false,
+			status: HttpStatus.FORBIDDEN,
+			message: 'You do not have access to this blog',
 		};
 	}
 

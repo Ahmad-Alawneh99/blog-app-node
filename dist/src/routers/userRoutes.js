@@ -50,7 +50,7 @@ const handleUserSignup = (req, res) => __awaiter(void 0, void 0, void 0, functio
             validationErrorResponse.message = 'Email is missing or invalid.';
         }
         if (!validationUtils.isStrongPassword(password)) {
-            validationErrorResponse.message = 'Weak password.';
+            validationErrorResponse.message = 'Weak password. Ensure password contains a capital letter, a number and a symbol. Minimum length is 8 characters.';
         }
         if (!name) {
             validationErrorResponse.message = 'Name is required.';

@@ -134,7 +134,7 @@ describe('userRoutes', () => {
 			expect(mockRes.json).to.have.been.calledWithExactly({
 				success: false,
 				status: HttpStatus.BAD_REQUEST,
-				message: 'Weak password.',
+				message: 'Weak password. Ensure password contains a capital letter, a number and a symbol. Minimum length is 8 characters.',
 			});
 			expect(mockRegisterUser).not.to.have.been.called;
 		});

@@ -19,7 +19,7 @@ const handleUserSignup = async (req: Request, res: Response) => {
 		}
 
 		if (!validationUtils.isStrongPassword(password)) {
-			validationErrorResponse.message = 'Weak password.';
+			validationErrorResponse.message = 'Weak password. Ensure password contains a capital letter, a number and a symbol. Minimum length is 8 characters.';
 		}
 
 		if (!name) {
