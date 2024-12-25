@@ -12,7 +12,7 @@
 * note: the deployment is a bit slow, Vercel is not the best option for backend apps
 
 ## CI/CD
-In addition to the Vercel deployment, Github actions were set for ESLint and unit tests, you can view these actions on this PR: https://github.com/Ahmad-Alawneh99/blog-app-next/pull/1.
+In addition to the Vercel deployment, Github actions were setup for ESLint and unit tests, you can view these actions on this PR: https://github.com/Ahmad-Alawneh99/blog-app-next/pull/1.
 Scroll down to the bottom, and expand the list of actions
 
 ## Project documentation
