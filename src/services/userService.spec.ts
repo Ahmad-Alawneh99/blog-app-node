@@ -44,13 +44,5 @@ describe('userService', () => {
 				password: 'mockHashedPassword',
 			});
 		});
-
-		it('return a specific error for duplicate users', async () => {
-
-		});
-
-		it('it should return an error for generic errors', async () => {
-
-		});
 	});
 });
