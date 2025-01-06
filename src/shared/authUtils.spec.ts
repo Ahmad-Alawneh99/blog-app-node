@@ -57,7 +57,7 @@ describe('authUtils', () => {
 			isUserLoggedIn(mockRequest, mockResponse, mockNext);
 
 			expect(mockNext).not.to.have.been.called;
-			expect(mockResponse.send).to.have.been.calledWithExactly({ success: false, code: 401, message: 'Authentication required' });
+			expect(mockResponse.send).to.have.been.calledWithExactly({ success: false, status: 401, message: 'Authentication required' });
 		});
 	});
 });
