@@ -12,7 +12,7 @@ connectToMongoDB().catch((error) => console.log('failed to connect to mongodb', 
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {
-	return res.send('Blog app backend');
+	return res.send('Blog app backend TESTING ACTIONS');
 });
 
 app.use('/users', userRouter);
